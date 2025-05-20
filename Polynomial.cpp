@@ -12,8 +12,6 @@ using namespace std;
 /// @brief default constructor
 Polynomial::Polynomial() {
 
-	cout << "*** Polynomial - Default Constructor ***\n\n";
-
 	Init();
 	
 }
@@ -22,8 +20,6 @@ Polynomial::Polynomial() {
 /// @param coefficients array with the coefficients of the polynomial
 /// @param size size of the array
 Polynomial::Polynomial(const double* coefficients, int size) {
-
-	cout << "*** Polynomial - Constructor ***\n\n";
 	
 	Init();
 
@@ -34,8 +30,6 @@ Polynomial::Polynomial(const double* coefficients, int size) {
 /// @brief copy constructor
 /// @param p reference to the object to copy
 Polynomial::Polynomial(const Polynomial& p) {
-
-	cout << "*** Polynomial - Copy Constructor ***\n\n";
 
 	Init();
 
@@ -48,8 +42,6 @@ Polynomial::Polynomial(const Polynomial& p) {
 /// @brief destructor 
 Polynomial::~Polynomial() {
 
-	cout << "*** Polynomial - Destructor ***\n\n";
-
 	Reset();
 
 }
@@ -58,8 +50,6 @@ Polynomial::~Polynomial() {
 /// @param p reference to the object on the right side of the operator
 /// @return reference to the object on the left side of the operator
 Polynomial& Polynomial::operator=(const Polynomial& p) {
-
-	cout << "*** Polynomial - operator= ***" << "\n\n";
 
 	Reset();
 
@@ -212,8 +202,6 @@ double Polynomial::GetValue(double x) {
 
 /// @brief print the dump of the object
 void Polynomial::Dump() {
-
-	cout << "*** Polynomial - Dump() ***\n\n";
 	 
 	if (degree == 0)
 		cout << coeffs[0];

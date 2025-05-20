@@ -12,8 +12,6 @@ using namespace std;
 /// @brief default constructor
 Power::Power() {
 
-    cout << "*** Power - Default Constructor ***\n\n";
-
     SetParam(0, 0);
 
 }
@@ -23,8 +21,6 @@ Power::Power() {
 /// @param e exponent of independent variable
 Power::Power(double k, double e) {
 
-    cout << "*** Power - Constructor ***\n\n";
-
     SetParam(k, e);
 
 }
@@ -33,8 +29,6 @@ Power::Power(double k, double e) {
 /// @param p reference to object to be copied
 Power::Power(const Power& p) {
 
-    cout << "*** Power - Copy Constructor ***\n\n";
-
     SetParam(p.k_coeff, p.e_coeff);
 
 }
@@ -42,7 +36,6 @@ Power::Power(const Power& p) {
 /// @brief destructor
 Power::~Power() {
 
-    cout << "*** Power - Destructor ***\n\n";
 
 }
 
@@ -50,8 +43,6 @@ Power::~Power() {
 /// @param p reference to object on the right side of the eoperator
 /// @return reference to the object on the left side of the operator
 Power& Power::operator=(const Power& p) {
-
-    cout << "*** Power - operator = ***\n\n";
 
     SetParam(p.k_coeff, p.e_coeff);
 
@@ -153,8 +144,6 @@ void Power::SetExp(double e) {
 
 /// @brief prints the dump of the object
 void Power::Dump() {
-
-    cout << "*** Power - Dump() ***\n\n";
 
     cout << k_coeff << " * x^" << e_coeff << "\n\n";
 

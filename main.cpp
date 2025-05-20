@@ -25,7 +25,6 @@ int main() {
 
 		// get the user choice
 		choice = displayMenu();
-
 		
 		// call the function corresponding to the user choice
 		switch (choice)
@@ -40,7 +39,7 @@ int main() {
 		case 2:
 			insertFunction(List);
 			break;
-		/*
+		
 		case 3:
 			deleteFunction(List);
 			break;
@@ -48,12 +47,13 @@ int main() {
 		case 4:
 			flushList(List);
 			break;
-
+		
 		case 5:
 			selectFunction(List);
 			break;
-		*/
+		
 		default:
+			cout << "Please, enter a valid option";
 			break;
 		}
 		 
