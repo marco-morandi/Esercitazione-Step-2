@@ -4,7 +4,7 @@
 
 
 #ifndef USER_INTERFACE_H
-#define USER_INtERFACE_H
+#define USER_INTERFACE_H
  
 #include <stdio.h>
 #include <vector>
@@ -28,7 +28,6 @@ void flushList(vector<Function*>& list);
 void selectFunction(vector<Function*>& list);
 
 void ErrorMessage(const char* string);
-
 
 
 #endif // USER_INTERFACE_H

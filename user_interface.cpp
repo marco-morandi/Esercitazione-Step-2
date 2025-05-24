@@ -5,6 +5,7 @@
 #include <Windows.h>
 
 #include "user_interface.h"
+#include "safeInput.hpp"
 
 /// @brief prints possible selections for the user
 /// @return the user choice
@@ -23,19 +24,16 @@ int displayMenu()
         cout << "4 - Delete all function from the list" << "\n";
         cout << "5 - Select a function from the list" << "\n\n";
 
-        cout << "Please insert your choice: " << "\n";
-        cin >> choice;
+        while (true) {
 
-        if (cin.fail() == true) { // check if the input is an integer
-            ErrorMessage("Enter a valid option.\n");
-            cin.clear();
-            cin.ignore(256, '\n'); // ignore all the characters in the buffer
-            choice = -1;
+            cout << "Please insert your choice: ";
+            if (safeInput<int>(choice))
+                break;
+
         }
-        else if (choice < 0 || choice > 5)
-        {
+
+        if (choice < 0 || choice > 5)
             ErrorMessage("Invalid input. Please insert a number from 0 to 5 included");
-        }
 
     } while (choice < 0 || choice > 5);
 
@@ -66,7 +64,7 @@ void displayList(vector <Function*>& list)
 /// @param list list of current functions
 void insertFunction(vector<Function*>& list) {
 
-    int choice = -1;
+    int choice;
 
     // display available types of functions
     do {
@@ -77,15 +75,16 @@ void insertFunction(vector<Function*>& list) {
         cout << "0 - Exit\n\n";
 
         cout << "Insert an option: ";
-        cin >> choice;
 
-        if (cin.fail() == true) { // check if the input is an integer
-            ErrorMessage("Enter a valid option.\n");
-            cin.clear(); 
-            cin.ignore(256, '\n'); // ignore all the characters in the buffer
-            choice = -1;
+        while (true) {
+
+            cout << "Insert an option: ";
+            if (safeInput<int>(choice))
+                break;
+
         }
-        else if (choice < 0 || choice > 3)
+
+        if (choice < 0 || choice > 3)
             ErrorMessage("Enter a valid option.\n");
 
     } while (choice < 0 || choice > 3);
@@ -112,22 +111,15 @@ void insertFunction(vector<Function*>& list) {
         }
 
         while (ans != 0) {
+
             // enter the degree of the polynomial
-            int flag = 0; // flag to check if input is acceptable
-            do {
+            while (true) {
+                
                 cout << "Enter the degree: ";
-                cin >> degree;
-
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
-
-            } while (flag == -1);
+                if (safeInput<int>(degree)) 
+                    break;
+                
+            }
             
 
             // create array of coefficients
@@ -141,22 +133,14 @@ void insertFunction(vector<Function*>& list) {
 
             // enter coefficients
             for (int i = 0; i < size; i++) {
-                
-                do {
+
+                while (true) {
+
                     cout << "\nEnter coefficient of term of grade " << i << ": ";
-                    cin >> coeff[i];
+                    if (safeInput<double>(coeff[i]))
+                        break;
 
-                    if (cin.fail() == true) { // check if the input is an integer
-                        ErrorMessage("Enter an integer.");
-                        cin.clear();
-                        cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                        flag = -1;
-                    }
-                    else
-                        flag = 0;
-
-                } while (flag == -1);
-                
+                }
             }
 
             p->SetNewParam(coeff, size);
@@ -165,44 +149,38 @@ void insertFunction(vector<Function*>& list) {
             cout << "\nf(x) = ";
             p->Dump();
 
-            
             do {
-                cout << "Is this the function you want to enter?\n0 - Yes\n1 - No\n";
-                cin >> ans;
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter a valid option.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
+                while (true) {
+
+                    cout << "Is this the function you want to enter?\n0 - Yes\n1 - No\n";
+                    if (safeInput<int>(ans))
+                        break;
+
                 }
-                else
-                    flag = 0;
 
-            } while (flag == -1);
+                if (ans != 0 && ans != 1)
+                    cout << "Please, enter a valid option.\n";
+
+            } while (ans != 0 && ans != 1);
 
             if (ans == 0)
                 list.push_back(p);
             else {
                 
                 do {
-                    cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
-                    do {
-                        cin >> option;
 
-                        if (cin.fail() == true) { // check if the input is an integer
-                            ErrorMessage("Enter a valid option.\n");
-                            cin.clear();
-                            cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                            flag = -1;
-                        }
-                        else
-                            flag = 0;
+                    while (true) {
 
-                    } while (flag == -1);
+                        cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
+                        if (safeInput<int>(option))
+                            break;
+
+                    }
 
                     if (option != 0 && option != 1)
                         cout << "Please, enter a valid option.\n";
+
                 } while (option != 0 && option != 1);
             }
 
@@ -229,40 +207,25 @@ void insertFunction(vector<Function*>& list) {
 
 
         while (ans != 0) {
-            int flag = 0;
-            // enter exponent
             
-            do {
+            // enter exponent
+            while (true) {
+
                 cout << "Enter the exponent: ";
-                cin >> e_coeff;
+                if (safeInput<double>(e_coeff))
+                    break;
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
-
-            } while (flag == -1);
+            }
+           
 
             // enter coefficient
-            
-            do {
+            while (true) {
+
                 cout << "Enter the coefficient: ";
-                cin >> k_coeff;
+                if (safeInput<double>(k_coeff))
+                    break;
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
-
-            } while (flag == -1);
+            }
 
             pw->SetParam(k_coeff, e_coeff);
 
@@ -270,52 +233,38 @@ void insertFunction(vector<Function*>& list) {
             cout << "\nf(x) = ";
             pw->Dump();
 
-            do
-            {
-                
+            do {
 
-                do {
-                    cout << "Is this the function you want to add to the list?\n0 - Yes\n1 - No\n";
-                    cin >> ans;
+                while (true) {
 
-                    if (cin.fail() == true) { // check if the input is an integer
-                        ErrorMessage("Enter an integer.\n");
-                        cin.clear();
-                        cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                        flag = -1;
-                    }
-                    else
-                        flag = 0;
+                    cout << "Is this the function you want to enter?\n0 - Yes\n1 - No\n";
+                    if (safeInput<int>(ans))
+                        break;
 
-                } while (flag == -1);
+                }
 
                 if (ans != 0 && ans != 1)
-                    cout << "Invalid input. Please insert a valid option." << "\n";
+                    cout << "Please, enter a valid option.\n";
 
             } while (ans != 0 && ans != 1);
-            
 
-            if (ans == 0) 
+            if (ans == 0)
                 list.push_back(pw);
             else {
+
                 do {
-                    cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
-                    do {
-                        cin >> option;
 
-                        if (cin.fail() == true) { // check if the input is an integer
-                            ErrorMessage("Enter an integer.\n");
-                            cin.clear();
-                            cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                            flag = -1;
-                        }
-                        else
-                            flag = 0;
+                    while (true) {
 
-                    } while (flag == -1);
+                        cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
+                        if (safeInput<int>(option))
+                            break;
+
+                    }
 
                     if (option != 0 && option != 1)
                         cout << "Please, enter a valid option.\n";
+
                 } while (option != 0 && option != 1);
             }
 
@@ -341,58 +290,34 @@ void insertFunction(vector<Function*>& list) {
 
         while (ans != 0) {
 
-            int flag = 0;
-
             // enter base of the exponential
             
-            do {
+            while (true) {
+
                 cout << "Enter the base of the exponential: ";
-                cin >> b_coeff;
+                if (safeInput<double>(b_coeff))
+                    break;
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
+            }
 
-            } while (flag == -1);
 
             // enter coefficient of the base
-            
-            do {
+            while (true) {
+
                 cout << "Enter the coefficient of the base: ";
-                cin >> k_coeff_e;
+                if (safeInput<double>(k_coeff_e))
+                    break;
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
-
-            } while (flag == -1);
+            }
 
             // enter coefficient of the independent variable
-            
-            do {
-                cout << "Enter the coefficient of the exponent: ";
-                cin >> c_coeff;
+            while (true) {
 
-                if (cin.fail() == true) { // check if the input is an integer
-                    ErrorMessage("Enter an integer.\n");
-                    cin.clear();
-                    cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                    flag = -1;
-                }
-                else
-                    flag = 0;
+                cout << "Enter the coefficient of the x: ";
+                if (safeInput<double>(c_coeff))
+                    break;
 
-            } while (flag == -1);
+            }
 
             e->SetParam(b_coeff, k_coeff_e, c_coeff);
 
@@ -400,47 +325,34 @@ void insertFunction(vector<Function*>& list) {
             cout << "\nf(x) = ";
             e->Dump();
 
-            do
-            {
+            do {
 
-                do {
-                    cout << "Is this the function you want to add to the list?\n0 - Yes\n1 - No\n";
-                    cin >> ans;
+                while (true) {
 
-                    if (cin.fail() == true) { // check if the input is an integer
-                        ErrorMessage("Enter an integer.\n");
-                        cin.clear();
-                        cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                        flag = -1;
-                    }
-                    else
-                        flag = 0;
+                    cout << "Is this the function you want to enter?\n0 - Yes\n1 - No\n";
+                    if (safeInput<int>(ans))
+                        break;
 
-                } while (flag == -1);
+                }
 
                 if (ans != 0 && ans != 1)
-                    cout << "Invalid input. Please insert a valid option." << "\n";
+                    cout << "Please, enter a valid option.\n";
 
             } while (ans != 0 && ans != 1);
 
             if (ans == 0)
                 list.push_back(e);
             else {
+
                 do {
-                    cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
-                    do {
-                        cin >> option;
 
-                        if (cin.fail() == true) { // check if the input is an integer
-                            ErrorMessage("Enter an integer.\n");
-                            cin.clear();
-                            cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                            flag = -1;
-                        }
-                        else
-                            flag = 0;
+                    while (true) {
 
-                    } while (flag == -1);
+                        cout << "\nChoose an option:\n0 - Get back to the menu\n1 - Enter new parameters\n";
+                        if (safeInput<int>(option))
+                            break;
+
+                    }
 
                     if (option != 0 && option != 1)
                         cout << "Please, enter a valid option.\n";
@@ -450,6 +362,7 @@ void insertFunction(vector<Function*>& list) {
 
             if (option == 0)
                 break;
+ 
         }
 
         break;
@@ -480,42 +393,30 @@ void deleteFunction(vector <Function*>& list)
         cout << "WARNING: The list is empty" << "\n";
         return;
     }
-    
-    int flag = 0;
 
     do
     {
-        do {
-            cout << "ID of the function to be deleted (-1 to exit deletion mode): \n";
 
-            cin >> choice;
+        while (true) {
 
-            if (cin.fail() == true) { // check if the input is an integer
-                ErrorMessage("Enter an integer.\n");
-                cin.clear();
-                cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                flag = -1;
-            }
-            else
-                flag = 0;
+            cout << "ID of the function to be deleted (-1 to exit deletion mode): ";
+            if (safeInput<int>(choice))
+                break;
 
-        } while (flag == -1);
+        }
 
-        if (choice > dim || choice < 0)
+        if (choice >= dim || choice < 0)
         {
             ErrorMessage("There is no function with the ID inserted");
             cout << "\nChoose from these possible IDs:" << "\n";
             //Print all element of the list, so that rhe user can see all the possible value ID
-            for (int i = 0; i < dim; i++)
-            {
-                cout << i << ". f(x) = ";
-                list[i]->Dump();
-                cout << "\n" << endl;
-            }
+
+            displayList(list);
 
             cout << "Please insert a valid ID" << endl;
         }
-    } while (choice > dim || choice < -1);
+
+    } while (choice >= dim || choice < -1);
 
     //check if the user wants to exit
     if (choice == -1)
@@ -528,20 +429,13 @@ void deleteFunction(vector <Function*>& list)
 
     do {
         
-        do {
+        while (true) {
+
             cout << "Do you want to delete this function?\n0 - Yes\n1 - No\n";
-            cin >> cancel;
+            if (safeInput<int>(cancel))
+                break;
 
-            if (cin.fail() == true) { // check if the input is an integer
-                ErrorMessage("Enter an integer.\n");
-                cin.clear();
-                cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                flag = -1;
-            }
-            else
-                flag = 0;
-
-        } while (flag == -1); 
+        }
 
         if (cancel != 0 && cancel != 1)
             cout << "Invalid input. Please insert a valid option." << "\n";
@@ -614,40 +508,28 @@ void selectFunction(vector <Function*>& list)
         return;
     }
 
-    int flag = 0;
-
     do
     {
-        do {
-            cout << "ID of the function to get the resulting value (-1 to exit):" << "\n";
-            cin >> choice;
 
-            if (cin.fail() == true) { // check if the input is an integer
-                ErrorMessage("Enter an integer.\n");
-                cin.clear();
-                cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                flag = -1;
-            }
-            else
-                flag = 0;
+        while (true) {
 
-        } while (flag == -1);
+            cout << "ID of the function to get the resulting value (-1 to exit): ";
+            if (safeInput<int>(choice))
+                break;
 
-        if (choice > dim || choice < 0)
+        }
+
+        if (choice >= dim || choice < 0)
         {
             ErrorMessage("There is no function with the ID inserted");
             cout << "Choose from these possible IDs:" << "\n";
             //Print all element of the list, so that the user can see all the possible value ID
-            for (int i = 0; i < dim; i++)
-            {
-                cout << "" << i << ".  f(x) = ";
-                list[i]->Dump();
-                cout << "\n" << endl;
-            }
+
+            displayList(list);
 
             cout << "Please insert a valid ID: \n";
         }
-    } while (choice > dim || choice < -1);
+    } while (choice >= dim || choice < -1);
 
     //Function of interest
     cout << "\nThe function with the inserted ID is: f(x) = ";
@@ -658,20 +540,13 @@ void selectFunction(vector <Function*>& list)
 
     do {
 
-        do {
+        while (true) {
+
             cout << "Do you want to calculate the value of this function?\n0 - Yes \n1 - No " << "\n";
-            cin >> ans;
+            if (safeInput<int>(ans))
+                break;
 
-            if (cin.fail() == true) { // check if the input is an integer
-                ErrorMessage("Enter an integer.\n");
-                cin.clear();
-                cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                flag = -1;
-            }
-            else
-                flag = 0;
-
-        } while (flag == -1);
+        }
 
         if (ans != 0 && ans != 1)
             cout << "Invalid input. Please insert a valid option." << "\n";
@@ -684,21 +559,13 @@ void selectFunction(vector <Function*>& list)
         //Setting the value of the free variable
         double x;
         
+        while (true) {
 
-        do {
-            cout << "\nInsert the value of the free variable: " << "\n";
-            cin >> x;
+            cout << "\nInsert the value of x: ";
+            if (safeInput<double>(x))
+                break;
 
-            if (cin.fail() == true) { // check if the input is an integer
-                ErrorMessage("Enter an integer.\n");
-                cin.clear();
-                cin.ignore(256, '\n'); // ignore all the characters in the buffer
-                flag = -1;
-            }
-            else
-                flag = 0;
-
-        } while (flag == -1);
+        }
 
         cout << "CALCULATING";
         Sleep(750);
