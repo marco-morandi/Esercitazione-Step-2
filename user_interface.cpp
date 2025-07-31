@@ -2,7 +2,7 @@
 /// @brief Implementation of the menu for the user
 /// @author Morandi Marco - Coppola Igor
 
-#include <Windows.h>
+#include <unistd.h>
 
 #include "user_interface.h"
 #include "safeInput.hpp"
@@ -470,13 +470,13 @@ void flushList(vector <Function*>& list)
     }
 
     cout << "FLUSHING LIST";
-    Sleep(750);
+    sleep(750);
     cout << ".";
-    Sleep(750);
+    sleep(750);
     cout << ".";
-    Sleep(750);
+    sleep(750);
     cout << ".";
-    Sleep(750);
+    sleep(750);
     cout << "\n";
 
     // deallocation of all the elements of the list
@@ -568,13 +568,13 @@ void selectFunction(vector <Function*>& list)
         }
 
         cout << "CALCULATING";
-        Sleep(750);
+        sleep(750);
         cout << ".";
-        Sleep(750);
+        sleep(750);
         cout << ".";
-        Sleep(750);
+        sleep(750);
         cout << ".";
-        Sleep(750);
+        sleep(750);
         cout << "\n";
         cout << "f(" << x << ") = " << list[choice]->GetValue(x) << "\n";
     }
